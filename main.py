@@ -45,6 +45,7 @@ with mp_pose.Pose(min_detection_confidence=0.5, min_tracking_confidence=0.5) as 
             right_shoulder = [landmarks[mp_pose.PoseLandmark.RIGHT_SHOULDER.value].x,landmarks[mp_pose.PoseLandmark.RIGHT_SHOULDER.value].y]
             left_hip = [landmarks[mp_pose.PoseLandmark.LEFT_HIP.value].x,landmarks[mp_pose.PoseLandmark.LEFT_HIP.value].y]
             right_hip = [landmarks[mp_pose.PoseLandmark.RIGHT_HIP.value].x,landmarks[mp_pose.PoseLandmark.RIGHT_HIP.value].y]
+
             # shoulder = [landmarks[mp_pose.PoseLandmark.LEFT_SHOULDER.value].x,landmarks[mp_pose.PoseLandmark.LEFT_SHOULDER.value].y]
             # elbow = [landmarks[mp_pose.PoseLandmark.LEFT_ELBOW.value].x,landmarks[mp_pose.PoseLandmark.LEFT_ELBOW.value].y]
             # wrist = [landmarks[mp_pose.PoseLandmark.LEFT_WRIST.value].x,landmarks[mp_pose.PoseLandmark.LEFT_WRIST.value].y]
@@ -52,17 +53,16 @@ with mp_pose.Pose(min_detection_confidence=0.5, min_tracking_confidence=0.5) as 
             # Calculate angle
             # angle = calculate_angle(shoulder, elbow, wrist)
             
-            # x_middle = left_shoulder[0] + np.abs(left_shoulder[0] - right_shoulder[0]) / 2
-            # y_middle = left_shoulder[1] + np.abs(left_hip[1] - left_shoulder[1]) / 2
+            x_middle = right_shoulder[0] + np.abs(left_shoulder[0] - right_shoulder[0]) / 2
+            y_middle = left_shoulder[1] + np.abs(left_hip[1] - left_shoulder[1]) / 2
 
             # Visualize angle
-            print(left_shoulder[0])
-            cv2.putText(image, np.multiply((x_middle, y_middle), [1080, 1920]), 
-                           tuple(np.multiply((x_middle, y_middle), [1080, 1920]).astype(int)), 
+            cv2.putText(image, str(np.multiply([x_middle, y_middle], [1920, 1080])), 
+                           tuple(np.multiply([x_middle, y_middle], [1920, 1080]).astype(int)), 
                            cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2, cv2.LINE_AA
                                 )
             
-            cv2.circle(image, (x_middle, y_middle), radius=0, color=(0, 0, 255), thickness=-1)
+            cv2.circle(image, (x_middle, y_middle), radius=5, color=(255, 255, 255), thickness=-1)
                        
         except:
             pass
