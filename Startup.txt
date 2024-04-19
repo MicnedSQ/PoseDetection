@@ -1,0 +1,5 @@
+ps aux | grep gphoto
+kill -9 1665
+kill -9 5238
+sudo modprobe v4l2loopback
+gphoto2 --stdout --set-config liveviewsiez=0 --capture-movie |  ffmpeg -i - -vcodec rawvideo -pix_fmt yuv420p -threads 0 -f v4l2 -s:v 1920x1080 -r 25 /dev/video0
